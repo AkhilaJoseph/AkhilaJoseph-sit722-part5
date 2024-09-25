@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  # Book Catalog Microservice
+  book_catalog:
+    build: ./book_catalog
+    environment:
+      DATABASE_URL: postgresql://my_database_ejeb_user:BXyKmXUOTY4LnyOPaL2EjTm2HogE6L6G@dpg-crqa2q2j1k6c738dio20-a.oregon-postgres.render.com/my_database_ejeb
+    ports:
+      - "8000:8000"
+
+  # Inventory Management Microservice
+  inventory_management:
+    build: ./inventory_management
+    environment:
+      DATABASE_URL: postgresql://my_database_ejeb_user:BXyKmXUOTY4LnyOPaL2EjTm2HogE6L6G@dpg-crqa2q2j1k6c738dio20-a.oregon-postgres.render.com/my_database_ejeb
+    ports:
+      - "8001:8000"
