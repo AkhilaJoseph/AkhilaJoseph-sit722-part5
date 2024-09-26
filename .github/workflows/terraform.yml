@@ -78,6 +78,7 @@ jobs:
     # Login to Azure Container Registry
     - name: Azure ACR Login
       run: |
+        echo ${{ secrets.ACR_PASSWORD }} | az acr login myacrregistry123.azurecr.io --username ${{ secrets.ACR_USERNAME }} --password-stdin
         echo ${{ secrets.ACR_PASSWORD }} | docker login myacrregistry123.azurecr.io --username ${{ secrets.ACR_USERNAME }} --password-stdin
         
      # Verify images have been built
@@ -87,13 +88,7 @@ jobs:
     # Push Docker Images to ACR using push-image.sh script
     - name: Push Docker images
       run: ./9.2D-resources/part4/scripts/push-image.sh
-      
-    # az role assignment
-    - name: Assign AcrPull role to AKS
-      run: |
-        CLIENT_ID=$(az aks show --resource-group my-aks-rg --name my-aks-cluster --query "identityProfile.kubeletidentity.clientId" -o tsv)
-        az role assignment create --assignee $CLIENT_ID --role AcrPull --scope /subscriptions/${{ secrets.ARM_SUBSCRIPTION_ID }}/resourceGroups/my-aks-rg/providers/Microsoft.ContainerRegistry/registries/myacrregistry123
-
+    
     # Attach ACR to AKS
     - name: Attach ACR to AKS
       run: az aks update -n my-aks-cluster -g my-aks-rg --attach-acr myacrregistry123
