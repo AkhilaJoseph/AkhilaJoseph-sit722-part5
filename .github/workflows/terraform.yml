@@ -61,6 +61,16 @@ jobs:
         chmod +x ./9.2D-resources/part4/scripts/deploy.sh
         chmod +x ./9.2D-resources/part4/scripts/delete.sh
 
+    # Set up Docker Buildx
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    # Install Docker Compose
+    - name: Install Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose
+
     # Build Docker Images using build-image.sh script
     - name: Build Docker images
       run: ./9.2D-resources/part4/scripts/build-image.sh
