@@ -53,13 +53,10 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
-    # Build Docker Image for book-catalog service
-    - name: Build Docker image for book_catalog
-      run: docker build -t myacrregistry123.azurecr.io/book-catalog:latest ./9.2D-resources/part4/book_catalog
-
-    # Build Docker Image for inventory-management service
-    - name: Build Docker image for inventory_management
-      run: docker build -t myacrregistry123.azurecr.io/inventory-management:latest ./9.2D-resources/part4/inventory_management
+      # Run docker-compose to build and bring up the services
+    - name: Build and run services with Docker Compose
+      run: |
+        docker-compose -f ./9.2D-resources/docker-compose.yml up --build -d
 
     # Login to Azure Container Registry
     - name: Azure ACR Login
