@@ -53,7 +53,15 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
-      # Build Docker Images using build-image.sh script
+    # Make the build and push scripts executable
+    - name: Make scripts executable
+      run: |
+        chmod +x ./9.2D-resources/part4/scripts/build-image.sh
+        chmod +x ./9.2D-resources/part4/scripts/push-image.sh
+        chmod +x ./9.2D-resources/part4/scripts/deploy.sh
+        chmod +x ./9.2D-resources/part4/scripts/delete.sh
+
+    # Build Docker Images using build-image.sh script
     - name: Build Docker images
       run: ./9.2D-resources/part4/scripts/build-image.sh
 
@@ -69,7 +77,6 @@ jobs:
     # Apply Kubernetes Manifest
     - name: Apply Kubernetes Manifest
       run: |
-        kubectl apply -f k8s/book-catalog-deployment.yaml
-        kubectl apply -f k8s/book-catalog-service.yaml
+        kubectl apply -f -f scripts/kubernetes/deployment.yaml
       env:
         KUBECONFIG: ${{ steps.terraform.outputs.kube_config }}
