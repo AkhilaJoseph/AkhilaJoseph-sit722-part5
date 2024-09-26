@@ -90,7 +90,7 @@ jobs:
 
     # Attach ACR to AKS
     - name: Attach ACR to AKS
-      run: az aks update -n <aks-cluster-name> -g my-aks-rg --attach-acr myacrregistry123
+      run: az aks update -n my-aks-cluster -g my-aks-rg --attach-acr myacrregistry123
       env:
         AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
