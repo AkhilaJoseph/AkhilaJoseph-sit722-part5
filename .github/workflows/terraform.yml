@@ -31,17 +31,17 @@ jobs:
     # Initialize Terraform
     - name: Terraform Init
       run: terraform init
-      working-directory: ./9.2D-resources/terraform
+      working-directory: ./9.2D-resources/Terraform
 
     # Terraform Plan
     - name: Terraform Plan
       run: terraform plan
-      working-directory: ./9.2D-resources/terraform
+      working-directory: ./9.2D-resources/Terraform
 
     # Terraform Apply
     - name: Terraform Apply
       run: terraform apply -auto-approve
-      working-directory: ./9.2D-resources/terraform
+      working-directory: ./9.2D-resources/Terraform
 
     # Build Docker Image
     - name: Build Docker image
