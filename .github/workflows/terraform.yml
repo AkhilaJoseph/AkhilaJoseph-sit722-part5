@@ -55,7 +55,7 @@ jobs:
 
       # Build Docker Images using build-image.sh script
     - name: Build Docker images
-      run: ./9.2D-resources/scripts/build-image.sh
+      run: ./9.2D-resources/part4/scripts/build-image.sh
 
     # Login to Azure Container Registry
     - name: Azure ACR Login
@@ -64,7 +64,7 @@ jobs:
 
     # Push Docker Images to ACR using push-image.sh script
     - name: Push Docker images
-      run: ./9.2D-resources/scripts/push-image.sh
+      run: ./9.2D-resources/part4/scripts/push-image.sh
 
     # Apply Kubernetes Manifest
     - name: Apply Kubernetes Manifest
