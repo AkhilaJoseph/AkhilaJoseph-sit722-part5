@@ -87,15 +87,16 @@ jobs:
     # Push Docker Images to ACR using push-image.sh script
     - name: Push Docker images
       run: ./9.2D-resources/part4/scripts/push-image.sh
+      
+    # az role assignment
+    - name: Assign AcrPull role to AKS
+      run: |
+        CLIENT_ID=$(az aks show --resource-group my-aks-rg --name my-aks-cluster --query "identityProfile.kubeletidentity.clientId" -o tsv)
+        az role assignment create --assignee $CLIENT_ID --role AcrPull --scope /subscriptions/${{ secrets.ARM_SUBSCRIPTION_ID }}/resourceGroups/my-aks-rg/providers/Microsoft.ContainerRegistry/registries/myacrregistry123
 
     # Attach ACR to AKS
     - name: Attach ACR to AKS
       run: az aks update -n my-aks-cluster -g my-aks-rg --attach-acr myacrregistry123
-      env:
-        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-        AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     # Apply Kubernetes Manifest
     - name: Deploy Docker images
