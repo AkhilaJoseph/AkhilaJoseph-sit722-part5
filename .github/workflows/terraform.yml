@@ -18,15 +18,14 @@ jobs:
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
 
-    # Install Azure CLI
-    - name: Install Azure CLI
+    # Install Azure CLI and log in
+    - name: Azure CLI Login
       uses: azure/CLI@v1
-
-    # Login to Azure using GitHub Secrets
-    - name: Azure Login
-      uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        inlineScript: |
+          az login --service-principal -u ${{ secrets.ARM_CLIENT_ID }} \
+          --password ${{ secrets.ARM_CLIENT_SECRET }} \
+          --tenant ${{ secrets.ARM_TENANT_ID }}
 
     # Initialize Terraform
     - name: Terraform Init
@@ -56,7 +55,7 @@ jobs:
     - name: Push Docker image
       run: docker push myacrregistry123.azurecr.io/book-catalog:latest
 
-    # Deploy Application to AKS using Kubernetes
+    # Apply Kubernetes Manifest
     - name: Apply Kubernetes Manifest
       run: |
         kubectl apply -f k8s/book-catalog-deployment.yaml
