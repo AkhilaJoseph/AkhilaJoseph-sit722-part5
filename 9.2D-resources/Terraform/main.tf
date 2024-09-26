@@ -1,7 +1,3 @@
-provider "azurerm" {
-  features {}
-}
-
 # Create Resource Group
 resource "azurerm_resource_group" "main" {
   name     = "my-aks-rg"
