@@ -75,8 +75,8 @@ jobs:
       run: ./9.2D-resources/part4/scripts/push-image.sh
 
     # Apply Kubernetes Manifest
-    - name: Apply Kubernetes Manifest
+    - name: Deploy Docker images
       run: |
-        kubectl apply -f -f scripts/kubernetes/deployment.yaml
+        ./9.2D-resources/part4/scripts/deploy.sh
       env:
         KUBECONFIG: ${{ steps.terraform.outputs.kube_config }}
