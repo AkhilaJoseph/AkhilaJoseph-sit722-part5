@@ -23,9 +23,10 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-          az login --service-principal -u ${{ secrets.ARM_CLIENT_ID }} \
-          --password ${{ secrets.ARM_CLIENT_SECRET }} \
-          --tenant ${{ secrets.ARM_TENANT_ID }}
+        az login --service-principal \
+        --username ${{ secrets.ARM_CLIENT_ID }} \
+        --password ${{ secrets.ARM_CLIENT_SECRET }} \
+        --tenant ${{ secrets.ARM_TENANT_ID }}
 
     # Initialize Terraform
     - name: Terraform Init
