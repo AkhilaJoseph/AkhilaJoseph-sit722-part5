@@ -20,13 +20,14 @@ jobs:
 
     # Azure CLI login using service principal
     - name: Azure CLI Login
-      uses: azure/login@v1
+      uses: azure/CLI@v1
       with:
-        inlineScript: |
+       inlineScript: |
           az login --service-principal \
           --username ${{ secrets.ARM_CLIENT_ID }} \
           --password ${{ secrets.ARM_CLIENT_SECRET }} \
           --tenant ${{ secrets.ARM_TENANT_ID }}
+
 
     # Initialize Terraform
     - name: Terraform Init
