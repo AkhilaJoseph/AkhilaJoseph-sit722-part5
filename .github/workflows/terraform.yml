@@ -78,7 +78,7 @@ jobs:
     # Login to Azure Container Registry
     - name: Azure ACR Login
       run: |
-        echo ${{ secrets.ACR_PASSWORD }} | az acr login --name myacrregistry123 --username ${{ secrets.ACR_USERNAME }} --password-stdin
+        az acr login --name myacrregistry123
         echo ${{ secrets.ACR_PASSWORD }} | docker login myacrregistry123.azurecr.io --username ${{ secrets.ACR_USERNAME }} --password-stdin
         
      # Verify images have been built
