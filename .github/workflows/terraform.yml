@@ -91,7 +91,7 @@ jobs:
     
     # Attach ACR to AKS
     - name: Attach ACR to AKS
-      run: az aks update -n my-aks-cluster -g my-aks-rg --attach-acr ${{ secrets.ACR_REGISTRY }}
+      run: az aks update -n my-aks-cluster -g my-aks-rg --attach-acr myacrregistry123
 
     # Apply Kubernetes Manifest
     - name: Deploy Docker images to AKS
