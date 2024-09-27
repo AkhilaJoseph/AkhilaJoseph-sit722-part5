@@ -77,10 +77,6 @@ jobs:
     - name: Build Docker images
       run: ./9.2D-resources/part4/scripts/build-image.sh
 
-    # Azure ACR Login
-    - name: Login to Azure Container Registry
-      run: az acr login --name ${{ secrets.ACR_REGISTRY }}
-
     # Login to Azure Container Registry
     - name: Azure ACR Login
       run: |
