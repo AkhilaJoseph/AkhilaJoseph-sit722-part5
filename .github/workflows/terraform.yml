@@ -72,9 +72,14 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y docker-compose
 
+
     # Build Docker Images using build-image.sh script
     - name: Build Docker images
       run: ./9.2D-resources/part4/scripts/build-image.sh
+
+    # Azure ACR Login
+    - name: Login to Azure Container Registry
+      run: az acr login --name ${{ secrets.ACR_REGISTRY }}
 
     # Login to Azure Container Registry
     - name: Azure ACR Login
@@ -88,16 +93,23 @@ jobs:
     # Push Docker Images to ACR using push-image.sh script
     - name: Push Docker images
       run: ./9.2D-resources/part4/scripts/push-image.sh
-    
-    # Attach ACR to AKS
-    - name: Attach ACR to AKS
-      run: az aks update -n my-aks-cluster -g my-aks-rg --attach-acr ${{ secrets.ACR_REGISTRY }}
 
     # Get AKS credentials to connect kubectl
     - name: Get AKS credentials
       run: |
         az aks get-credentials --resource-group my-aks-rg --name my-aks-cluster --overwrite-existing
+    
+    # Attach ACR to AKS
+    - name: Attach ACR to AKS
+      run: az aks update -n my-aks-cluster -g my-aks-rg --attach-acr ${{ secrets.ACR_REGISTRY }}
 
     # Apply Kubernetes Manifest
     - name: Deploy Docker images to AKS
       run: ./9.2D-resources/part4/scripts/deploy.sh
+
+    # Verify the deployment using kubectl commands
+    - name: Verify Kubernetes deployment
+      run: |
+        kubectl get pods
+        kubectl get deployments
+        kubectl get services
