@@ -103,3 +103,7 @@ jobs:
         kubectl get pods
         kubectl get deployments
         kubectl get services
+
+    # Delete Kubernetes Manifest
+    - name: Delete Kubernetes
+      run: ./9.2D-resources/part4/scripts/delete.sh
