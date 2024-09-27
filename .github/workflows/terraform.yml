@@ -18,16 +18,10 @@ jobs:
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
 
-    # Azure CLI login using service principal
     - name: Azure CLI Login
-      uses: azure/CLI@v1
+      uses: azure/login@v1
       with:
-       inlineScript: |
-          az login --service-principal \
-          --username ${{ secrets.ARM_CLIENT_ID }} \
-          --password ${{ secrets.ARM_CLIENT_SECRET }} \
-          --tenant ${{ secrets.ARM_TENANT_ID }}
-
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     # Initialize Terraform
     - name: Terraform Init
